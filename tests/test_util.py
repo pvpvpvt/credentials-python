@@ -3,6 +3,7 @@ from alibabacloud_credentials.utils import auth_util, parameter_helper
 import unittest
 import re
 from . import txt_file
+from alibabacloud_credentials.configure._config import user_agent_prefix
 
 
 class TestUtil(unittest.TestCase):
@@ -29,9 +30,9 @@ class TestUtil(unittest.TestCase):
             test.assertEqual('sU6S6xf2t47FogXuDhqyIPt/htc=', signature)
 
         def test_compose_url(test):
-            endpoint, queries, protocol = 'aliyun.com', {"tests": "test"}, 'https'
+            endpoint, queries, protocol = 'test.com', {"tests": "test"}, 'https'
             res = parameter_helper.compose_url(endpoint, queries, protocol)
-            test.assertEqual('https://aliyun.com/?tests=test', res)
+            test.assertEqual('https://test.com/?tests=test', res)
 
         def test_get_new_request(test):
             request = parameter_helper.get_new_request()
@@ -43,7 +44,7 @@ class TestUtil(unittest.TestCase):
             test.assertIsNone(request.body)
             test.assertEqual('', request.pathname)
             test.assertIsNotNone(
-                re.match('AlibabaCloud (.+; .+) Python/.+ Credentials/.+ TeaDSL/1',
+                re.match(user_agent_prefix + ' (.+; .+) Python/.+ Credentials/.+ TeaDSL/1',
                          request.headers.get('user-agent')))
 
         test_get_uuid(self)

@@ -33,9 +33,6 @@ URL = "https://github.com/aliyun/credentials-python"
 TOPDIR = os.path.dirname(__file__) or "."
 VERSION = __import__(PACKAGE).__version__
 
-with open("README.md", encoding="utf-8") as fp:
-    LONG_DESCRIPTION = fp.read()
-
 install_requires = [
     'alibabacloud-tea>=0.4.0',
     'alibabacloud_credentials_api>=1.0.0, <2.0.0'
@@ -51,7 +48,6 @@ else:
 setup_args = {
     'version': VERSION,
     'description': DESCRIPTION,
-    'long_description': LONG_DESCRIPTION,
     'long_description_content_type': 'text/markdown',
     'author': AUTHOR,
     'author_email': AUTHOR_EMAIL,
