@@ -1,31 +1,32 @@
 import os
 import platform
 import re
+from alibabacloud_credentials.configure._config import ENV_PREFIX
 
-client_type = os.environ.get('ALIBABA_CLOUD_PROFILE', 'default')
+client_type = os.environ.get(ENV_PREFIX + 'PROFILE', 'default')
 
-environment_access_key_id = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_ID')
-environment_access_key_secret = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_SECRET')
-environment_security_token = os.environ.get('ALIBABA_CLOUD_SECURITY_TOKEN')
+environment_access_key_id = os.environ.get(ENV_PREFIX + 'ACCESS_KEY_ID')
+environment_access_key_secret = os.environ.get(ENV_PREFIX + 'ACCESS_KEY_SECRET')
+environment_security_token = os.environ.get(ENV_PREFIX + 'SECURITY_TOKEN')
 
-environment_ECSMeta_data = os.environ.get('ALIBABA_CLOUD_ECS_METADATA')
-environment_ecs_metadata = os.environ.get('ALIBABA_CLOUD_ECS_METADATA')
-environment_imds_v1_disabled = os.environ.get('ALIBABA_CLOUD_IMDSV1_DISABLED', 'false')
-environment_ecs_metadata_disabled = os.environ.get('ALIBABA_CLOUD_ECS_METADATA_DISABLED', 'false')
+environment_ECSMeta_data = os.environ.get(ENV_PREFIX + 'ECS_METADATA')
+environment_ecs_metadata = os.environ.get(ENV_PREFIX + 'ECS_METADATA')
+environment_imds_v1_disabled = os.environ.get(ENV_PREFIX + 'IMDSV1_DISABLED', 'false')
+environment_ecs_metadata_disabled = os.environ.get(ENV_PREFIX + 'ECS_METADATA_DISABLED', 'false')
 
-environment_credentials_file = os.environ.get('ALIBABA_CLOUD_CREDENTIALS_FILE')
-environment_profile_name = os.environ.get('ALIBABA_CLOUD_PROFILE')
-environment_oidc_token_file = os.environ.get('ALIBABA_CLOUD_OIDC_TOKEN_FILE')
-environment_role_arn = os.environ.get('ALIBABA_CLOUD_ROLE_ARN')
-environment_oidc_provider_arn = os.environ.get('ALIBABA_CLOUD_OIDC_PROVIDER_ARN')
-environment_role_session_name = os.environ.get('ALIBABA_CLOUD_ROLE_SESSION_NAME')
+environment_credentials_file = os.environ.get(ENV_PREFIX + 'CREDENTIALS_FILE')
+environment_profile_name = os.environ.get(ENV_PREFIX + 'PROFILE')
+environment_oidc_token_file = os.environ.get(ENV_PREFIX + 'OIDC_TOKEN_FILE')
+environment_role_arn = os.environ.get(ENV_PREFIX + 'ROLE_ARN')
+environment_oidc_provider_arn = os.environ.get(ENV_PREFIX + 'OIDC_PROVIDER_ARN')
+environment_role_session_name = os.environ.get(ENV_PREFIX + 'ROLE_SESSION_NAME')
 
-environment_credentials_uri = os.environ.get('ALIBABA_CLOUD_CREDENTIALS_URI')
+environment_credentials_uri = os.environ.get(ENV_PREFIX + 'CREDENTIALS_URI')
 
-environment_cli_profile_disabled = os.environ.get('ALIBABA_CLOUD_CLI_PROFILE_DISABLED', 'false')
+environment_cli_profile_disabled = os.environ.get(ENV_PREFIX + 'CLI_PROFILE_DISABLED', 'false')
 
-environment_sts_region = os.environ.get('ALIBABA_CLOUD_STS_REGION')
-environment_enable_vpc = os.environ.get('ALIBABA_CLOUD_VPC_ENDPOINT_ENABLED', 'false')
+environment_sts_region = os.environ.get(ENV_PREFIX + 'STS_REGION')
+environment_enable_vpc = os.environ.get(ENV_PREFIX + 'VPC_ENDPOINT_ENABLED', 'false')
 
 enable_oidc_credential = environment_oidc_token_file is not None and environment_oidc_token_file != '' \
                          and environment_role_arn is not None and environment_role_arn != '' \

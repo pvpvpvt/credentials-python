@@ -16,13 +16,14 @@ from alibabacloud_credentials.provider import (
     OIDCRoleArnCredentialsProvider
 )
 from alibabacloud_credentials.utils import auth_constant as ac
+from alibabacloud_credentials.configure._config import CLI_CONFIG_DIR, ENDPOINT_SUFFIX
 
 
 class TestCLIProfileCredentialsProvider(unittest.TestCase):
 
     def setUp(self):
         self.profile_name = "test_profile"
-        self.profile_file = os.path.join(ac.HOME, ".aliyun/config.json")
+        self.profile_file = os.path.join(ac.HOME, cli_config_dir + "/config.json")
         self.config = {
             "current": "test_profile",
             "profiles": [
@@ -102,7 +103,7 @@ class TestCLIProfileCredentialsProvider(unittest.TestCase):
             provider = CLIProfileCredentialsProvider()
 
             self.assertEqual(provider._profile_name, self.profile_name)
-            self.assertEqual(provider._profile_file, os.path.join(ac.HOME, ".aliyun/config.json"))
+            self.assertEqual(provider._profile_file, os.path.join(ac.HOME, CLI_CONFIG_DIR + "/config.json"))
 
     def test_get_credentials_valid_ak(self):
         """
@@ -169,7 +170,8 @@ class TestCLIProfileCredentialsProvider(unittest.TestCase):
                         self.assertEqual(credentials_provider._duration_seconds, 7200)
                         self.assertEqual(credentials_provider._policy, 'test_policy')
                         self.assertEqual(credentials_provider._external_id, 'test_external_id')
-                        self.assertEqual(credentials_provider._sts_endpoint, 'sts-vpc.test_sts_region.aliyuncs.com')
+                        self.assertEqual(credentials_provider._sts_endpoint,
+                                         'sts-vpc.test_sts_region.' + ENDPOINT_SUFFIX)
 
     def test_get_credentials_valid_ecs_ram_role(self):
         """
@@ -208,7 +210,8 @@ class TestCLIProfileCredentialsProvider(unittest.TestCase):
                         self.assertEqual(credentials_provider._role_session_name, 'test_role_session_name')
                         self.assertEqual(credentials_provider._duration_seconds, 7200)
                         self.assertEqual(credentials_provider._policy, 'test_policy')
-                        self.assertEqual(credentials_provider._sts_endpoint, 'sts-vpc.test_sts_region.aliyuncs.com')
+                        self.assertEqual(credentials_provider._sts_endpoint,
+                                         'sts-vpc.test_sts_region.' + endpoint_suffix)
 
     def test_get_credentials_valid_chainable_ram_role_arn(self):
         """
@@ -241,7 +244,8 @@ class TestCLIProfileCredentialsProvider(unittest.TestCase):
                         self.assertEqual(credentials_provider._duration_seconds, 7200)
                         self.assertEqual(credentials_provider._policy, 'test_policy')
                         self.assertEqual(credentials_provider._external_id, 'test_external_id')
-                        self.assertEqual(credentials_provider._sts_endpoint, 'sts-vpc.test_sts_region.aliyuncs.com')
+                        self.assertEqual(credentials_provider._sts_endpoint,
+                                         'sts-vpc.test_sts_region.' + endpoint_suffix)
 
     def test_get_credentials_cli_profile_disabled(self):
         """

@@ -10,6 +10,7 @@ from alibabacloud_credentials.provider.oidc import (
 )
 from alibabacloud_credentials.http import HttpOptions
 from Tea.core import TeaResponse
+from alibabacloud_credentials.configure._config import ENDPOINT_SUFFIX, STS_DEFAULT_ENDPOINT
 
 
 class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
@@ -75,7 +76,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
         self.assertEqual(provider._role_session_name, self.role_session_name)
         self.assertEqual(provider._duration_seconds, OIDCRoleArnCredentialsProvider.DEFAULT_DURATION_SECONDS)
         self.assertIsNone(provider._policy)
-        self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.' + ENDPOINT_SUFFIX)
         self.assertEqual(provider._runtime_options['connectTimeout'],
                          OIDCRoleArnCredentialsProvider.DEFAULT_CONNECT_TIMEOUT)
         self.assertEqual(provider._runtime_options['readTimeout'], OIDCRoleArnCredentialsProvider.DEFAULT_READ_TIMEOUT)
@@ -194,7 +195,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
         self.assertTrue(provider._role_session_name.startswith('credentials-python-'))
         self.assertEqual(provider._duration_seconds, OIDCRoleArnCredentialsProvider.DEFAULT_DURATION_SECONDS)
         self.assertIsNone(provider._policy)
-        self.assertEqual(provider._sts_endpoint, 'sts.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)
         self.assertEqual(provider._runtime_options['connectTimeout'],
                          OIDCRoleArnCredentialsProvider.DEFAULT_CONNECT_TIMEOUT)
         self.assertEqual(provider._runtime_options['readTimeout'], OIDCRoleArnCredentialsProvider.DEFAULT_READ_TIMEOUT)
@@ -493,7 +494,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.oidc.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.oidc.au.environment_sts_region', 'test_env_sts_region')
@@ -513,7 +514,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, f'sts.{self.sts_region_id}.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, f'sts.{self.sts_region_id}.' + endpoint_suffix)
 
     @patch('alibabacloud_credentials.provider.oidc.au.environment_enable_vpc', 'true')
     @patch('alibabacloud_credentials.provider.oidc.au.environment_sts_region', 'test_env_sts_region')
@@ -532,7 +533,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, f'sts-vpc.test_env_sts_region.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, f'sts-vpc.test_env_sts_region.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.oidc.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.oidc.au.environment_sts_region', 'test_env_sts_region')
@@ -551,7 +552,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, f'sts.test_env_sts_region.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, f'sts.test_env_sts_region.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.oidc.au.environment_enable_vpc', 'true')
     @patch('alibabacloud_credentials.provider.oidc.au.environment_sts_region', None)
@@ -570,7 +571,7 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, 'sts.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)
 
     @patch('alibabacloud_credentials.provider.oidc.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.oidc.au.environment_sts_region', None)
@@ -589,4 +590,4 @@ class TestOIDCRoleArnCredentialsProvider(unittest.TestCase):
             http_options=self.http_options
         )
 
-        self.assertEqual(provider._sts_endpoint, 'sts.aliyuncs.com')
+        self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)

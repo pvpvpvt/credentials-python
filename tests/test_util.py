@@ -6,6 +6,7 @@ from unittest.mock import patch
 import re
 from . import txt_file
 import platform
+from alibabacloud_credentials.configure._config import USER_AGENT_PREFIX
 
 
 class TestUtil(unittest.TestCase):
@@ -32,9 +33,9 @@ class TestUtil(unittest.TestCase):
             test.assertEqual('sU6S6xf2t47FogXuDhqyIPt/htc=', signature)
 
         def test_compose_url(test):
-            endpoint, queries, protocol = 'aliyun.com', {"tests": "test"}, 'https'
+            endpoint, queries, protocol = 'example.com', {"tests": "test"}, 'https'
             res = parameter_helper.compose_url(endpoint, queries, protocol)
-            test.assertEqual('https://aliyun.com/?tests=test', res)
+            test.assertEqual('https://example.com/?tests=test', res)
 
         def test_get_new_request(test):
             request = parameter_helper.get_new_request()
@@ -46,7 +47,7 @@ class TestUtil(unittest.TestCase):
             test.assertIsNone(request.body)
             test.assertEqual('', request.pathname)
             test.assertIsNotNone(
-                re.match('AlibabaCloud (.+; .+) Python/.+ Credentials/.+ TeaDSL/1',
+                re.match(USER_AGENT_PREFIX + ' (.+; .+) Python/.+ Credentials/.+ TeaDSL/1',
                          request.headers.get('user-agent')))
 
         test_get_uuid(self)

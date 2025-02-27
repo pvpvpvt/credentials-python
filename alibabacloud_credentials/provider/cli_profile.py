@@ -11,6 +11,7 @@ from alibabacloud_credentials_api import ICredentialsProvider
 from alibabacloud_credentials.utils import auth_constant as ac
 from alibabacloud_credentials.utils import auth_util as au
 from alibabacloud_credentials.exceptions import CredentialException
+from alibabacloud_credentials.configure._config import CLI_CONFIG_DIR
 
 
 async def _load_config_async(file_path: str) -> Any:
@@ -29,7 +30,7 @@ class CLIProfileCredentialsProvider(ICredentialsProvider):
 
     def __init__(self, *,
                  profile_name: str = None):
-        self._profile_file = os.path.join(ac.HOME, ".aliyun/config.json")
+        self._profile_file = os.path.join(ac.HOME, CLI_CONFIG_DIR + "/config.json")
         self._profile_name = profile_name or au.environment_profile_name
         self.__innerProvider = None
 

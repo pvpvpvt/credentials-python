@@ -10,6 +10,7 @@ from alibabacloud_credentials_api import ICredentialsProvider
 from alibabacloud_credentials.utils import auth_util as au
 from alibabacloud_credentials.utils import parameter_helper as ph
 from alibabacloud_credentials.exceptions import CredentialException
+from alibabacloud_credentials.configure._config import ENDPOINT_SUFFIX, STS_DEFAULT_ENDPOINT
 
 
 async def _get_token_async(file_path: str) -> str:
@@ -77,11 +78,11 @@ class OIDCRoleArnCredentialsProvider(ICredentialsProvider):
             else:
                 prefix = 'sts-vpc' if au.environment_enable_vpc.lower() == 'true' else 'sts'
             if sts_region_id is not None and sts_region_id != '':
-                self._sts_endpoint = f'{prefix}.{sts_region_id}.aliyuncs.com'
+                self._sts_endpoint = f'{prefix}.{sts_region_id}.' + ENDPOINT_SUFFIX
             elif au.environment_sts_region is not None and au.environment_sts_region != '':
-                self._sts_endpoint = f'{prefix}.{au.environment_sts_region}.aliyuncs.com'
+                self._sts_endpoint = f'{prefix}.{au.environment_sts_region}.' + ENDPOINT_SUFFIX
             else:
-                self._sts_endpoint = 'sts.aliyuncs.com'
+                self._sts_endpoint = STS_DEFAULT_ENDPOINT
 
         self._http_options = http_options if http_options is not None else HttpOptions()
         self._runtime_options = {

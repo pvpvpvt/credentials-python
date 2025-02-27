@@ -13,6 +13,7 @@ from alibabacloud_credentials_api import ICredentialsProvider
 from alibabacloud_credentials.utils import auth_util as au
 from alibabacloud_credentials.utils import parameter_helper as ph
 from alibabacloud_credentials.exceptions import CredentialException
+from alibabacloud_credentials.configure._config import ECS_METADATA_HOST, ECS_METADATA_HEADER_PREFIX
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -36,7 +37,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         self.__url_in_ecs_metadata_token = '/latest/api/token'
         self.__ecs_metadata_fetch_error_msg = 'Failed to get RAM session credentials from ECS metadata service.'
         self.__ecs_metadata_token_fetch_error_msg = 'Failed to get token from ECS Metadata Service.'
-        self.__metadata_service_host = '100.100.100.200'
+        self.__metadata_service_host = ECS_METADATA_HOST
         self._should_refresh = False
 
         self._role_name = role_name if role_name is not None else au.environment_ecs_metadata
@@ -91,7 +92,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request.headers['host'] = url if url else self.__metadata_service_host
         metadata_token = self._get_metadata_token(url)
         if metadata_token is not None:
-            tea_request.headers['X-aliyun-ecs-metadata-token'] = metadata_token
+            tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token'] = metadata_token
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata
         response = TeaCore.do_action(tea_request, self._runtime_options)
@@ -104,7 +105,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request.headers['host'] = url if url else self.__metadata_service_host
         metadata_token = await self._get_metadata_token_async(url)
         if metadata_token is not None:
-            tea_request.headers['X-aliyun-ecs-metadata-token'] = metadata_token
+            tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token'] = metadata_token
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata
         response = await TeaCore.async_do_action(tea_request, self._runtime_options)
@@ -116,7 +117,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request = ph.get_new_request()
         tea_request.method = 'PUT'
         tea_request.headers['host'] = url if url else self.__metadata_service_host
-        tea_request.headers['X-aliyun-ecs-metadata-token-ttl-seconds'] = str(
+        tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token-ttl-seconds'] = str(
             EcsRamRoleCredentialsProvider.DEFAULT_METADATA_TOKEN_DURATION)
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata_token
@@ -135,7 +136,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request = ph.get_new_request()
         tea_request.method = 'PUT'
         tea_request.headers['host'] = url if url else self.__metadata_service_host
-        tea_request.headers['X-aliyun-ecs-metadata-token-ttl-seconds'] = str(
+        tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token-ttl-seconds'] = str(
             EcsRamRoleCredentialsProvider.DEFAULT_METADATA_TOKEN_DURATION)
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata_token
@@ -158,7 +159,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request.headers['host'] = url if url else self.__metadata_service_host
         metadata_token = self._get_metadata_token(url)
         if metadata_token is not None:
-            tea_request.headers['X-aliyun-ecs-metadata-token'] = metadata_token
+            tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token'] = metadata_token
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata + role_name
         # request
@@ -201,7 +202,7 @@ class EcsRamRoleCredentialsProvider(ICredentialsProvider):
         tea_request.headers['host'] = url if url else self.__metadata_service_host
         metadata_token = await self._get_metadata_token_async(url)
         if metadata_token is not None:
-            tea_request.headers['X-aliyun-ecs-metadata-token'] = metadata_token
+            tea_request.headers[ECS_METADATA_HEADER_PREFIX + 'ecs-metadata-token'] = metadata_token
         if not url:
             tea_request.pathname = self.__url_in_ecs_metadata + role_name
 

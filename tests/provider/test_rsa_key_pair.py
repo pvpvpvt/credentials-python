@@ -10,6 +10,7 @@ from alibabacloud_credentials.provider.rsa_key_pair import (
 )
 from alibabacloud_credentials.http import HttpOptions
 from Tea.core import TeaResponse
+from alibabacloud_credentials.configure._config import ENDPOINT_SUFFIX, STS_DEFAULT_ENDPOINT
 
 
 class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
@@ -142,7 +143,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
             self.assertEqual(provider._private_key_file, self.private_key_file)
             self.assertEqual(provider._duration_seconds, RsaKeyPairCredentialsProvider.DEFAULT_DURATION_SECONDS)
             self.assertEqual(provider._private_key, self.private_key_content)
-            self.assertEqual(provider._sts_endpoint, 'sts.ap-northeast-1.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)
             self.assertEqual(provider._runtime_options['connectTimeout'],
                              RsaKeyPairCredentialsProvider.DEFAULT_CONNECT_TIMEOUT)
             self.assertEqual(provider._runtime_options['readTimeout'],
@@ -365,7 +366,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, f'sts-vpc.{self.sts_region_id}.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_sts_region', 'test_env_sts_region')
@@ -384,7 +385,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, f'sts.{self.sts_region_id}.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, f'sts.{self.sts_region_id}.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_enable_vpc', 'true')
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_sts_region', 'test_env_sts_region')
@@ -402,7 +403,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, f'sts-vpc.test_env_sts_region.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, f'sts-vpc.test_env_sts_region.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_sts_region', 'test_env_sts_region')
@@ -420,7 +421,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, f'sts.test_env_sts_region.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, f'sts.test_env_sts_region.' + ENDPOINT_SUFFIX)
 
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_enable_vpc', 'true')
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_sts_region', None)
@@ -438,7 +439,7 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, 'sts.ap-northeast-1.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)
 
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_enable_vpc', 'false')
     @patch('alibabacloud_credentials.provider.rsa_key_pair.au.environment_sts_region', None)
@@ -456,4 +457,4 @@ class TestRsaKeyPairCredentialsProvider(unittest.TestCase):
                 http_options=self.http_options
             )
 
-            self.assertEqual(provider._sts_endpoint, 'sts.ap-northeast-1.aliyuncs.com')
+            self.assertEqual(provider._sts_endpoint, STS_DEFAULT_ENDPOINT)

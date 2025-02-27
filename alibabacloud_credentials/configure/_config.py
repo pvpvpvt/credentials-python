@@ -1,0 +1,10 @@
+ENV_PREFIX = '{{env_prefix}}'
+USER_AGENT_PREFIX = '{{user_agent_prefix}}'
+CLI_CONFIG_DIR = "{{config_path}}"
+CREDENTIAL_FILE_PATH = "{{credential_file_path}}"
+ECS_METADATA_HOST = '{{metadata_host}}'
+ECS_METADATA_HEADER_PREFIX = '{{imds_header_prefix}}'
+ENDPOINT_SUFFIX = '{{endpoint_suffix}}'
+STS_DEFAULT_ENDPOINT = '{{sts_default_endpoint}}'
+SIGN_PREFIX = '{{sign_prefix}}'
+SIGNATURE_TYPE_PREFIX = '{{signature_type_prefix}}'

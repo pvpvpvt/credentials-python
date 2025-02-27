@@ -16,7 +16,6 @@ class Config(TeaModel):
             access_key_secret: str = None,
             security_token: str = None,
             bearer_token: str = None,
-            duration_seconds: int = None,
             role_arn: str = None,
             oidc_provider_arn: str = None,
             oidc_token_file_path: str = None,
@@ -28,9 +27,7 @@ class Config(TeaModel):
             public_key_id: str = None,
             private_key_file: str = None,
             role_name: str = None,
-            enable_imds_v2: bool = None,
             disable_imds_v1: bool = None,
-            metadata_token_duration: int = None,
             credentials_uri: str = None,
             host: str = None,
             timeout: int = None,
@@ -97,7 +94,6 @@ class Config(TeaModel):
         self.access_key_secret = access_key_secret
         self.security_token = security_token
         self.bearer_token = bearer_token
-        self.duration_seconds = duration_seconds
         self.role_arn = role_arn
         self.oidc_provider_arn = oidc_provider_arn
         self.oidc_token_file_path = oidc_token_file_path
@@ -110,8 +106,6 @@ class Config(TeaModel):
         self.private_key_file = private_key_file
         self.role_name = role_name
         self.disable_imds_v1 = disable_imds_v1
-        self.enable_imds_v2 = enable_imds_v2
-        self.metadata_token_duration = metadata_token_duration
         self.credentials_uri = credentials_uri
         self.host = host
         self.timeout = timeout
@@ -133,8 +127,6 @@ class Config(TeaModel):
             result['securityToken'] = self.security_token
         if self.bearer_token is not None:
             result['bearerToken'] = self.bearer_token
-        if self.duration_seconds is not None:
-            result['durationSeconds'] = self.duration_seconds
         if self.role_arn is not None:
             result['roleArn'] = self.role_arn
         if self.oidc_provider_arn is not None:
@@ -159,10 +151,6 @@ class Config(TeaModel):
             result['roleName'] = self.role_name
         if self.disable_imds_v1 is not None:
             result['disableIMDSv1'] = self.disable_imds_v1
-        if self.enable_imds_v2 is not None:
-            result['enableIMDSv2'] = self.enable_imds_v2
-        if self.metadata_token_duration is not None:
-            result['metadataTokenDuration'] = self.metadata_token_duration
         if self.credentials_uri is not None:
             result['credentialsUri'] = self.credentials_uri
         if self.host is not None:
@@ -187,8 +175,6 @@ class Config(TeaModel):
             self.security_token = m.get('securityToken')
         if m.get('bearerToken') is not None:
             self.bearer_token = m.get('bearerToken')
-        if m.get('durationSeconds') is not None:
-            self.duration_seconds = m.get('durationSeconds')
         if m.get('roleArn') is not None:
             self.role_arn = m.get('roleArn')
         if m.get('oidcProviderArn') is not None:
@@ -213,10 +199,6 @@ class Config(TeaModel):
             self.role_name = m.get('roleName')
         if m.get('disableIMDSv1') is not None:
             self.disable_imds_v1 = m.get('disableIMDSv1')
-        if m.get('enableIMDSv2') is not None:
-            self.enable_imds_v2 = m.get('enableIMDSv2')
-        if m.get('metadataTokenDuration') is not None:
-            self.metadata_token_duration = m.get('metadataTokenDuration')
         if m.get('credentialsUri') is not None:
             self.credentials_uri = m.get('credentialsUri')
         if m.get('host') is not None:
