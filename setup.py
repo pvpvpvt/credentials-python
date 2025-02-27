@@ -19,22 +19,13 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-"""
-Setup module for tea credentials.
-Created on 3/24/2020
-@author: Alibaba Cloud
-"""
-
 PACKAGE = "alibabacloud_credentials"
-DESCRIPTION = "The alibabacloud credentials module of alibabaCloud Python SDK."
-AUTHOR = "Alibaba Cloud"
+DESCRIPTION = "The credentials module of Python SDK."
+AUTHOR = "Cloud"
 AUTHOR_EMAIL = "alibaba-cloud-sdk-dev-team@list.alibaba-inc.com"
 URL = "https://github.com/aliyun/credentials-python"
 TOPDIR = os.path.dirname(__file__) or "."
 VERSION = __import__(PACKAGE).__version__
-
-with open("README.md", encoding="utf-8") as fp:
-    LONG_DESCRIPTION = fp.read()
 
 install_requires = [
     'alibabacloud-tea>=0.4.0',
@@ -51,7 +42,6 @@ else:
 setup_args = {
     'version': VERSION,
     'description': DESCRIPTION,
-    'long_description': LONG_DESCRIPTION,
     'long_description_content_type': 'text/markdown',
     'author': AUTHOR,
     'author_email': AUTHOR_EMAIL,
